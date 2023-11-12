@@ -5,7 +5,7 @@
 html,body,:root{
   height: 100%;
 }
-.cl-internal-b3fm6y,.userButtonPopoverFooter {
+.cl-internal-b3fm6y,.cl-userButtonPopoverFooter{
   display: none;
 }
 
