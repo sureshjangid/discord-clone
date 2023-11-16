@@ -10,3 +10,9 @@ export interface ActionTooltipProps {
   side?: "top" | "right" | "bottom" | "left";
   align?: "start" | "center" | "end";
 }
+
+export interface NavigationItemProps {
+  id: string;
+  imageUrl: string;
+  name: string;
+}
