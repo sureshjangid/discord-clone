@@ -24,3 +24,7 @@ export interface ModalStore {
   onOpen: (type: ModalType) => void;
   onClose: () => void;
 }
+
+export interface ServerSidebarProps {
+  serverId: string;
+}
