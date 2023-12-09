@@ -1,3 +1,5 @@
+import { Member, MemberRole, Profile, Server } from "@prisma/client";
+
 export interface FileUploadProps {
   onChange: (url?: string) => void;
   value: string;
@@ -27,4 +29,12 @@ export interface ModalStore {
 
 export interface ServerSidebarProps {
   serverId: string;
+}
+
+export type ServerWithMembersWithProfiles = Server & {
+  members: (Member & { profile: Profile })[];
+};
+export interface ServerHeaderProps {
+  server: ServerWithMembersWithProfiles;
+  role?: MemberRole;
 }
