@@ -19,11 +19,16 @@ export interface NavigationItemProps {
   name: string;
 }
 
-export type ModalType = "createServer";
+export type ModalType = "createServer" | "invite";
+
+export interface ModalData {
+  server?: Server;
+}
 export interface ModalStore {
   type: ModalType | null;
+  data: ModalData;
   isOpen: boolean;
-  onOpen: (type: ModalType) => void;
+  onOpen: (type: ModalType, data?: ModalData) => void;
   onClose: () => void;
 }
 
@@ -37,4 +42,10 @@ export type ServerWithMembersWithProfiles = Server & {
 export interface ServerHeaderProps {
   server: ServerWithMembersWithProfiles;
   role?: MemberRole;
+}
+
+export interface InviteCodePageProps {
+  params: {
+    inviteCode: string;
+  };
 }
