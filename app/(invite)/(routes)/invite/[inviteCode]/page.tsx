@@ -6,12 +6,16 @@ import { redirect } from "next/navigation";
 
 const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   const profile = await currentProfile();
+  console.log(params.inviteCode, "profileprofileprofile");
+
   if (!profile) {
     return redirectToSignIn();
   }
+
   if (!params.inviteCode) {
     return redirect("/");
   }
+
   const existingServer = await db.server.findFirst({
     where: {
       inviteCode: params.inviteCode,
@@ -22,10 +26,12 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
       },
     },
   });
+
   if (existingServer) {
-    return redirect(`/server/${existingServer.id}`);
+    return redirect(`/servers/${existingServer.id}`);
   }
-  const server = db.server.update({
+
+  const server = await db.server.update({
     where: {
       inviteCode: params.inviteCode,
     },
@@ -34,12 +40,17 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
         create: [
           {
             profileId: profile.id,
-          }, 
+          },
         ],
       },
     },
   });
-  return <div>hello invite</div>;
+
+  if (server) {
+    return redirect(`/servers/${server.id}`);
+  }
+
+  return null;
 };
 
 export default InviteCodePage;
