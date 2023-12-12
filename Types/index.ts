@@ -19,7 +19,7 @@ export interface NavigationItemProps {
   name: string;
 }
 
-export type ModalType = "createServer" | "invite";
+export type ModalType = "createServer" | "invite" | "editServer";
 
 export interface ModalData {
   server?: Server;
