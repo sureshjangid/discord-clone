@@ -23,7 +23,6 @@ const ServerHeader = ({ server, role }: ServerHeaderProps) => {
   const { onOpen } = useModal();
   const isAdmin = role === MemberRole.AMDIN;
   const isModerator = isAdmin || role === MemberRole.MODERATOR;
-console.log(isModerator,'isModerator');
 
   return (
     <DropdownMenu>
@@ -53,7 +52,9 @@ console.log(isModerator,'isModerator');
           </DropdownMenuItem>
         )}
         {isAdmin && (
-          <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer">
+          <DropdownMenuItem 
+          onClick={()=>onOpen("members",{server})}
+          className="px-3 py-2 text-sm cursor-pointer">
             Manage Members
             <User className="h-4 w-4 ml-auto" />
           </DropdownMenuItem>

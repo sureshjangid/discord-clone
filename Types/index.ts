@@ -19,7 +19,7 @@ export interface NavigationItemProps {
   name: string;
 }
 
-export type ModalType = "createServer" | "invite" | "editServer";
+export type ModalType = "createServer" | "invite" | "editServer" | "members";
 
 export interface ModalData {
   server?: Server;
@@ -48,4 +48,9 @@ export interface InviteCodePageProps {
   params: {
     inviteCode: string;
   };
+}
+
+export interface UserAvatarProps {
+  src?: string;
+  className?: string;
 }

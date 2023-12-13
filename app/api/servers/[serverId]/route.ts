@@ -21,7 +21,7 @@ export async function PATCH(
         name,
         imageUrl,
       },
-    });
+    }); 
     return NextResponse.json(server);
   } catch (error) {
     console.log("[serverId patch]", error);

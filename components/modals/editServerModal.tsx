@@ -40,7 +40,6 @@ export const EditServerModal = () => {
 
   const isModalOpen = isOpen && type === "editServer";
   const { server } = data;
-  console.log(server, "serverserver");
 
   const form = useForm({
     resolver: zodResolver(fonmSchema),
