@@ -19,7 +19,7 @@ export interface NavigationItemProps {
   name: string;
 }
 
-export type ModalType = "createServer" | "invite" | "editServer" | "members" | "createChannel";
+export type ModalType = "createServer" | "invite" | "editServer" | "members" | "createChannel" | "leaveServer";
 
 export interface ModalData {
   server?: Server;
