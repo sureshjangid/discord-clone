@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "../ui/button";
@@ -23,7 +23,14 @@ import {
 import { Input } from "../ui/input";
 import { useModal } from "@/hooks/useModalStore";
 import { ChannelType } from "@prisma/client";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import qs from "query-string";
 const fonmSchema = z.object({
   name: z
     .string()
@@ -39,7 +46,7 @@ const fonmSchema = z.object({
 export const CreateChaneelModal = () => {
   const { isOpen, onClose, type } = useModal();
   const router = useRouter();
-
+  const params = useParams();
   const isModalOpen = isOpen && type === "createChannel";
   const form = useForm({
     resolver: zodResolver(fonmSchema),
@@ -51,7 +58,13 @@ export const CreateChaneelModal = () => {
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof fonmSchema>) => {
     try {
-      await axios.post("/api/channels/", values);
+      const url = qs.stringifyUrl({
+        url: "/api/channels",
+        query: {
+          serverId: params?.serverId,
+        },
+      });
+      await axios.post(url, values);
       form.reset();
       router.refresh();
       onClose();
@@ -109,17 +122,22 @@ export const CreateChaneelModal = () => {
                       >
                         <FormControl>
                           <SelectTrigger className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none">
-<SelectValue placeholder="Select a channel type" />
+                            <SelectValue placeholder="Select a channel type" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {Object.values(ChannelType).map((type)=>(
-                           <SelectItem key={type}value={type} className="capitalize">
-                            {type.toLowerCase()}
-                           </SelectItem> 
+                          {Object.values(ChannelType).map((type) => (
+                            <SelectItem
+                              key={type}
+                              value={type}
+                              className="capitalize"
+                            >
+                              {type.toLowerCase()}
+                            </SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
