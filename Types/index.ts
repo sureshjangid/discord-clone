@@ -19,7 +19,14 @@ export interface NavigationItemProps {
   name: string;
 }
 
-export type ModalType = "createServer" | "invite" | "editServer" | "members" | "createChannel" | "leaveServer" | "deleteServer";
+export type ModalType =
+  | "createServer"
+  | "invite"
+  | "editServer"
+  | "members"
+  | "createChannel"
+  | "leaveServer"
+  | "deleteServer";
 
 export interface ModalData {
   server?: Server;
@@ -53,4 +60,18 @@ export interface InviteCodePageProps {
 export interface UserAvatarProps {
   src?: string;
   className?: string;
+}
+
+export interface ServerSearchProps {
+  data: {
+    label: string;
+    type: "channel" | "member";
+    data:
+      | {
+          icon: React.ReactNode;
+          name: string;
+          id: string;
+        }[]
+      | undefined;
+  }[];
 }
