@@ -15,8 +15,8 @@ const iconMap = {
 };
 const roleIconMap = {
   [MemberRole.GUEST]: null,
-  [MemberRole.MODERATOR]: <ShieldCheck className="mr-2 h-4 w-4" />,
-  [MemberRole.AMDIN]: <ShieldAlert className="mr-2 h-4 w-4" />,
+  [MemberRole.MODERATOR]: <ShieldCheck className="mr-2 h-4 w-4 text-indigo-500"  />,
+  [MemberRole.AMDIN]: <ShieldAlert className="mr-2 h-4 w-4 text-rose-500" />,
 };
 const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
   const profile = await currentProfile();
