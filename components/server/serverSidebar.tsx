@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { ScrollArea } from "../ui/scroll-area";
 import ServerSearch from "./ServerSearch";
 import ServerHeader from "./serverHeader";
+import { Separator } from "../ui/separator";
 
 const iconMap = {
   [ChannelType.TEXT]: <Hash className="h-4 w-4 mr-2" />,
@@ -110,6 +111,7 @@ const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
             ]}
           />
         </div>
+        <Separator className="bg-zinc-200 dark:bg-zine-700 rounded-md my-2"/>
       </ScrollArea>
     </div>
   );
