@@ -31,6 +31,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import qs from "query-string";
+import { useEffect } from "react";
 const fonmSchema = z.object({
   name: z
     .string()
@@ -44,17 +45,26 @@ const fonmSchema = z.object({
 });
 
 export const CreateChaneelModal = () => {
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
   const params = useParams();
   const isModalOpen = isOpen && type === "createChannel";
+  const { channelType } = data;
   const form = useForm({
     resolver: zodResolver(fonmSchema),
     defaultValues: {
       name: "",
-      type: ChannelType.TEXT,
+      type: channelType || ChannelType.TEXT,
     },
   });
+
+  useEffect(() => {
+    if (channelType) {
+      form.setValue("type", channelType);
+    } else {
+      form.setValue("type", ChannelType.TEXT);
+    }
+  }, [channelType, form]);
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof fonmSchema>) => {
     try {
