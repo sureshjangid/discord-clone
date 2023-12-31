@@ -8,6 +8,8 @@ import { ScrollArea } from "../ui/scroll-area";
 import ServerSearch from "./ServerSearch";
 import ServerHeader from "./serverHeader";
 import { Separator } from "../ui/separator";
+import ServerSection from "./ServerSection";
+import ServerChannel from "./ServerChannel";
 
 const iconMap = {
   [ChannelType.TEXT]: <Hash className="h-4 w-4 mr-2" />,
@@ -16,7 +18,9 @@ const iconMap = {
 };
 const roleIconMap = {
   [MemberRole.GUEST]: null,
-  [MemberRole.MODERATOR]: <ShieldCheck className="mr-2 h-4 w-4 text-indigo-500"  />,
+  [MemberRole.MODERATOR]: (
+    <ShieldCheck className="mr-2 h-4 w-4 text-indigo-500" />
+  ),
   [MemberRole.AMDIN]: <ShieldAlert className="mr-2 h-4 w-4 text-rose-500" />,
 };
 const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
@@ -111,7 +115,20 @@ const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
             ]}
           />
         </div>
-        <Separator className="bg-zinc-200 dark:bg-zine-700 rounded-md my-2"/>
+        <Separator className="bg-zinc-200 dark:bg-zine-700 rounded-md my-2" />
+        {!!textChannels?.length && (
+          <div className="mb-2">
+            <ServerSection
+              sectionType="channels"
+              channelType={ChannelType.TEXT}
+              role={role}
+              label="Text Channel"
+            />
+            {textChannels?.map((channel)=>(
+              <ServerChannel/>
+            ))}
+          </div>
+        )}
       </ScrollArea>
     </div>
   );

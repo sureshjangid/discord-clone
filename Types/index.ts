@@ -1,4 +1,4 @@
-import { Member, MemberRole, Profile, Server } from "@prisma/client";
+import { ChannelType, Member, MemberRole, Profile, Server } from "@prisma/client";
 
 export interface FileUploadProps {
   onChange: (url?: string) => void;
@@ -74,4 +74,13 @@ export interface ServerSearchProps {
         }[]
       | undefined;
   }[];
+}
+
+
+export interface ServerSectionProps{
+  label:string,
+  role?:MemberRole,
+  sectionType:"channels" | "members";
+  channelType?:ChannelType;
+  server?:ServerWithMembersWithProfiles
 }
