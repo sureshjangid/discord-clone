@@ -104,3 +104,8 @@ export interface ServerMemberProps {
   member: Member & { profile: Profile };
   server: Server;
 }
+
+export interface ServerIdPageProps {
+  params: { serverId: string };
+}
+
