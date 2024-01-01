@@ -68,7 +68,7 @@ export const EditChaneelModal = () => {
   const onSubmit = async (values: z.infer<typeof fonmSchema>) => {
     try {
       const url = qs.stringifyUrl({
-        url: `/api/f/${channel?.id}`,
+        url: `/api/channels/${channel?.id}`,
         query: {
           serverId: server?.id,
         },
