@@ -78,12 +78,12 @@ export interface ServerSearchProps {
     label: string;
     type: "channel" | "member";
     data:
-      | {
-          icon: React.ReactNode;
-          name: string;
-          id: string;
-        }[]
-      | undefined;
+    | {
+      icon: React.ReactNode;
+      name: string;
+      id: string;
+    }[]
+    | undefined;
   }[];
 }
 
@@ -121,4 +121,14 @@ export interface ChatHeaderProps {
   name: string;
   type: "channel" | "conversation";
   imageUrl?: string;
+}
+
+export interface MemberIdPageProps {
+  params: {
+    memberId: string,
+    serverId: string
+  },
+  searchParams: {
+    video?: boolean;
+  }
 }
