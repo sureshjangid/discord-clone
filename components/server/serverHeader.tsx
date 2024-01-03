@@ -23,7 +23,7 @@ const ServerHeader = ({ server, role }: ServerHeaderProps) => {
   const { onOpen } = useModal();
   const isAdmin = role === MemberRole.AMDIN;
   const isModerator = isAdmin || role === MemberRole.MODERATOR;
-
+  console.log("suresh");
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus:outline-none" asChild>
