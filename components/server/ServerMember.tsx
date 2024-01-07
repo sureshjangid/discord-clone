@@ -6,25 +6,30 @@ import { useParams, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { UserAvatar } from "../userAvatar";
-import { ServerMemberProps } from "@/Types";
+
+interface ServerMemberProps {
+  member: Member & { profile: Profile };
+  server: Server;
+}
 
 const roleIconMap = {
   [MemberRole.GUEST]: null,
-  [MemberRole.MODERATOR]: (
-    <ShieldCheck className="h-4 w-4 ml-2 text-indigo-500" />
-  ),
-  [MemberRole.AMDIN]: <ShieldAlert className="h-4 w-4 ml-2 text-rose-500" />,
-};
+  [MemberRole.MODERATOR]: <ShieldCheck className="h-4 w-4 ml-2 text-indigo-500" />,
+  [MemberRole.AMDIN]: <ShieldAlert className="h-4 w-4 ml-2 text-rose-500" />
+}
 
-export const ServerMember = ({ member, server }: ServerMemberProps) => {
+export const ServerMember = ({
+  member,
+  server
+}: ServerMemberProps) => {
   const params = useParams();
   const router = useRouter();
 
   const icon = roleIconMap[member.role];
 
   const onClick = () => {
-    router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
-  };
+    router.push(`/servers/${params?.serverId}/conversations/${member.id}`)
+  }
 
   return (
     <button
@@ -41,13 +46,12 @@ export const ServerMember = ({ member, server }: ServerMemberProps) => {
       <p
         className={cn(
           "font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition",
-          params?.memberId === member.id &&
-            "text-primary dark:text-zinc-200 dark:group-hover:text-white"
+          params?.memberId === member.id && "text-primary dark:text-zinc-200 dark:group-hover:text-white"
         )}
       >
         {member.profile.name}
       </p>
       {icon}
     </button>
-  );
-};
+  )
+}
