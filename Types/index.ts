@@ -6,7 +6,9 @@ import {
   Profile,
   Server,
 } from "@prisma/client";
-
+import { Server as NetSever, Socket } from 'net';
+import { NextApiRequest, NextApiResponse } from "next";
+import { Server as SocketIOServer } from "socket.io"
 export interface FileUploadProps {
   onChange: (url?: string) => void;
   value: string;
@@ -132,3 +134,17 @@ export interface MemberIdPageProps {
     video?: boolean;
   }
 }
+
+export type NextApiResponseServerIo = NextApiResponse & {
+  socket: Socket & {
+    server: NetSever & {
+      io: SocketIOServer
+    }
+  }
+}
+
+export type SocketContextType = {
+  socket: any | null;
+  isConnected: Boolean
+}
+
