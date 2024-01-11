@@ -37,12 +37,14 @@ export type ModalType =
   | "leaveServer"
   | "deleteServer"
   | "deleteChannel"
-  | "editChannel";
+  | "editChannel" | "messageFile";
 
 export interface ModalData {
   server?: Server;
   channelType?: ChannelType;
   channel?: Channel;
+  apiUrl?: string,
+  query?: Record<string, any>;
 }
 export interface ModalStore {
   type: ModalType | null;
@@ -148,9 +150,9 @@ export type SocketContextType = {
   isConnected: Boolean
 }
 
-export interface ChatInputProps{
-  apiUrl:string;
-  query:Record<string,any>;
-  name:string;
-  type:"conversation" | "channel";
+export interface ChatInputProps {
+  apiUrl: string;
+  query: Record<string, any>;
+  name: string;
+  type: "conversation" | "channel";
 }
