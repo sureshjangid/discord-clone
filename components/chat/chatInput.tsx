@@ -11,6 +11,7 @@ import qs from 'query-string';
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/useModalStore";
+import { EmojiPicker } from "../EmojiPicker";
 
 const formSchema = z.object({
     content:z.string().min(1)
@@ -65,7 +66,7 @@ const {onOpen}= useModal();
                     className="px-14 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
                                       />
                                       <div className="absolute top-7 right-8">
-                                        <Smile/>
+                                        <EmojiPicker onChange={(emoji:string)=>field.onChange(`${field.value} ${emoji}`)}/>
                                       </div>
                                </div>
                     </FormControl>

@@ -156,3 +156,7 @@ export interface ChatInputProps {
   name: string;
   type: "conversation" | "channel";
 }
+
+export interface EmojiPickerProps {
+  onChange: (value: string) => void;
+}
