@@ -160,3 +160,21 @@ export interface ChatInputProps {
 export interface EmojiPickerProps {
   onChange: (value: string) => void;
 }
+
+export interface ChatMessageProps {
+  name: string,
+  member: Member,
+  chatId: string,
+  apiUrl: string,
+  socketUrl: string,
+  socketQuery: Record<string, string>;
+  paramKey: "channelId" | "conversationId";
+  paramValue:string,
+  type:"channel"| "conversation"
+
+}
+
+export interface ChatWelcomeProps {
+  name:string,
+  type:"channel"| "conversation"
+}
