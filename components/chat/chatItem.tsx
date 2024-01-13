@@ -13,6 +13,9 @@ import { useEffect, useState } from "react";
 import { useModal } from "@/hooks/useModalStore";
 import { useForm } from "react-hook-form";
 import { useParams ,useRouter} from "next/navigation";
+import { Form, FormControl, FormField, FormItem } from "../ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 const roleIconMap = {
     "GUEST": null,
     "MODERATOR": <ShieldCheck className="h-4 w-4 ml-2 text-indigo-500" />,
@@ -149,6 +152,38 @@ export const ChatItem = ({ content, currentMember, deleted, fileUrl, id, isUpdat
             </p>
           )}
           </div>
+          {!fileUrl && isEditing && (
+            <Form {...form}>
+              <form 
+                className="flex items-center w-full gap-x-2 pt-2"
+                onSubmit={form.handleSubmit(onSubmit)}>
+                  <FormField
+                    control={form.control}
+                    name="content"
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormControl>
+                          <div className="relative w-full">
+                            <Input
+                              disabled={isLoading}
+                              className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
+                              placeholder="Edited message"
+                              {...field}
+                            />
+                          </div>
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  <Button disabled={isLoading} size="sm" variant="primary">
+                    Save
+                  </Button>
+              </form>
+              <span className="text-[10px] mt-1 text-zinc-400">
+                Press escape to cancel, enter to save
+              </span>
+            </Form>
+          )}
                     </div> 
 </div>
 {canDeleteMessage && (
