@@ -185,3 +185,18 @@ export interface ChatQueryProps {
   paramKey: "channelId" | "conversationId",
   paramValue: string
 }
+
+export interface ChatItemProps {
+  id: string;
+  content: string;
+  member: Member & {
+    profile: Profile;
+  };
+  timestamp: string;
+  fileUrl: string | null;
+  deleted: boolean;
+  currentMember: Member;
+  isUpdated: boolean;
+  socketUrl: string;
+  socketQuery: Record<string, string>;
+};

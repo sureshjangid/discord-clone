@@ -6,7 +6,8 @@ import { useChatQuery } from "@/hooks/useChatQuery";
 import { Loader2, ServerCrash } from "lucide-react";
 import { Fragment } from "react";
 import { Member, Message, Profile } from "@prisma/client";
-
+import { ChatItem } from "./chatItem";
+import {format} from 'date-fns';
 
 type MessageWithMemberWithProfile = Message & {
     member: Member & {
@@ -28,7 +29,7 @@ export const ChatMessage = ({apiUrl,chatId,member,name,paramKey,paramValue,socke
         paramKey,
         paramValue,
       });
-console.log(status,'statusstatus')
+      const DATE_FORMAT = "d MMM yyyy, HH:mm";
     if (status === "pending") {
     return (
       <div className="flex flex-col flex-1 justify-center items-center">
@@ -80,7 +81,3 @@ console.log(status,'statusstatus')
 
     )    
 }
-
-return (
-    
-)
