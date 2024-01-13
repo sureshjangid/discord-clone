@@ -169,12 +169,19 @@ export interface ChatMessageProps {
   socketUrl: string,
   socketQuery: Record<string, string>;
   paramKey: "channelId" | "conversationId";
-  paramValue:string,
-  type:"channel"| "conversation"
+  paramValue: string,
+  type: "channel" | "conversation"
 
 }
 
 export interface ChatWelcomeProps {
-  name:string,
-  type:"channel"| "conversation"
+  name: string,
+  type: "channel" | "conversation"
+}
+
+export interface ChatQueryProps {
+  queryKey: string,
+  apiUrl: string,
+  paramKey: "channelId" | "conversationId",
+  paramValue: string
 }
