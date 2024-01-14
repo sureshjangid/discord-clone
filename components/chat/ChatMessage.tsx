@@ -8,6 +8,7 @@ import { Fragment } from "react";
 import { Member, Message, Profile } from "@prisma/client";
 import { ChatItem } from "./chatItem";
 import {format} from 'date-fns';
+import { useChatSocket } from "@/hooks/useChatSocket";
 
 type MessageWithMemberWithProfile = Message & {
     member: Member & {
@@ -16,7 +17,10 @@ type MessageWithMemberWithProfile = Message & {
   }
   
 export const ChatMessage = ({apiUrl,chatId,member,name,paramKey,paramValue,socketQuery,socketUrl,type}:ChatMessageProps)=>{
-    const queryKey =`chat${chatId}`
+    const queryKey =`chat:${chatId}`
+    const addKey = `chat:${chatId}:messages`
+    const updateKey = `chat:${chatId}:messages:update`
+
     const {
         data,
         fetchNextPage,
@@ -29,6 +33,7 @@ export const ChatMessage = ({apiUrl,chatId,member,name,paramKey,paramValue,socke
         paramKey,
         paramValue,
       });
+      useChatSocket({queryKey,addKey,updateKey})
       const DATE_FORMAT = "d MMM yyyy, HH:mm";
     if (status === "pending") {
     return (
