@@ -9,6 +9,7 @@ import {
 } from "react";
 import { io as ClientIO } from "socket.io-client";
 
+
 const SocketContext = createContext<SocketContextType>({
   socket: null,
   isConnected: false,

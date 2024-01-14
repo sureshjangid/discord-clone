@@ -40,7 +40,9 @@ export const ChatMessage = ({ apiUrl, chatId, member, name, paramKey, paramValue
   useChatSocket({ queryKey, addKey, updateKey })
   useChatScroll({chatRef,bottomRef,loadMore:fetchNextPage,
   shouldLoadMore:!isFetchingNextPage && !!hasNextPage,count:data?.pages?.[0]?.items?.length ?? 0})
+
   const DATE_FORMAT = "d MMM yyyy, HH:mm";
+  
   if (status === "pending") {
     return (
       <div className="flex flex-col flex-1 justify-center items-center">

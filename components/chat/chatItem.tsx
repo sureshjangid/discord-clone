@@ -107,7 +107,7 @@ export const ChatItem = ({ content, currentMember, deleted, fileUrl, id, isUpdat
               </ActionTooltip>
             </div>
             <span className="text-xs text-zinc-500 dark:text-zinc-400">
-              {timestamp}
+              {timestamp || ''}
             </span>
           </div>
            {isImage && (

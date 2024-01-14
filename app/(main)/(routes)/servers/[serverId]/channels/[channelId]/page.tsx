@@ -2,9 +2,11 @@ import { ChannelIdPageProps } from "@/Types";
 import ChatHeader from "@/components/chat/ChatHeader";
 import { ChatMessage } from "@/components/chat/ChatMessage";
 import { ChatInput } from "@/components/chat/chatInput";
+import { MediaRoom } from "@/components/mediaRoom";
 import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
+import { ChannelType } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
@@ -31,7 +33,9 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
         name={channel?.name}
         serverId={channel.serverId}
       />
-      <ChatMessage member={member} type="channel" name={channel.name} apiUrl="/api/messages" socketUrl="/api/socket/messages" socketQuery={{
+      {channel.type===ChannelType.TEXT && (
+<>
+<ChatMessage member={member} type="channel" name={channel.name} apiUrl="/api/messages" socketUrl="/api/socket/messages" socketQuery={{
         channelId:channel.id,
         serverId:channel.serverId
       }}
@@ -40,6 +44,23 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
         channelId:channel.id,
         serverId:channel.serverId
       }} type="channel"/>
+      </>
+      )}
+      {channel.type===ChannelType.AUDIO && (
+        <MediaRoom
+        audio={true}
+        chatId={channel.id}
+        video={false}
+        />
+      )}
+
+{channel.type===ChannelType.VIDEO && (
+        <MediaRoom
+        audio={true}
+        chatId={channel.id}
+        video={true}
+        />
+      )}
     </div>
   );
 };
