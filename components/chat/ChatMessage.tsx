@@ -4,38 +4,44 @@ import { ChatMessageProps } from "@/Types";
 import { ChatWelcome } from "./ChatWelcome";
 import { useChatQuery } from "@/hooks/useChatQuery";
 import { Loader2, ServerCrash } from "lucide-react";
-import { Fragment } from "react";
+import { ElementRef, Fragment, useRef } from "react";
 import { Member, Message, Profile } from "@prisma/client";
 import { ChatItem } from "./chatItem";
-import {format} from 'date-fns';
+import { format } from 'date-fns';
 import { useChatSocket } from "@/hooks/useChatSocket";
+import { useChatScroll } from "@/hooks/useChatScroll";
 
 type MessageWithMemberWithProfile = Message & {
-    member: Member & {
-      profile: Profile
-    }
+  member: Member & {
+    profile: Profile
   }
-  
-export const ChatMessage = ({apiUrl,chatId,member,name,paramKey,paramValue,socketQuery,socketUrl,type}:ChatMessageProps)=>{
-    const queryKey =`chat:${chatId}`
-    const addKey = `chat:${chatId}:messages`
-    const updateKey = `chat:${chatId}:messages:update`
+}
 
-    const {
-        data,
-        fetchNextPage,
-        hasNextPage,
-        isFetchingNextPage,
-        status,
-      } = useChatQuery({
-        queryKey,
-        apiUrl,
-        paramKey,
-        paramValue,
-      });
-      useChatSocket({queryKey,addKey,updateKey})
-      const DATE_FORMAT = "d MMM yyyy, HH:mm";
-    if (status === "pending") {
+export const ChatMessage = ({ apiUrl, chatId, member, name, paramKey, paramValue, socketQuery, socketUrl, type }: ChatMessageProps) => {
+  const queryKey = `chat:${chatId}`
+  const addKey = `chat:${chatId}:messages`
+  const updateKey = `chat:${chatId}:messages:update`
+
+  const chatRef = useRef<ElementRef<"div">>(null);
+  const bottomRef = useRef<ElementRef<"div">>(null);
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  } = useChatQuery({
+    queryKey,
+    apiUrl,
+    paramKey,
+    paramValue,
+  });
+  useChatSocket({ queryKey, addKey, updateKey })
+  useChatScroll({chatRef,bottomRef,loadMore:fetchNextPage,
+  shouldLoadMore:!isFetchingNextPage && !!hasNextPage,count:data?.pages?.[0]?.items?.length ?? 0})
+  const DATE_FORMAT = "d MMM yyyy, HH:mm";
+  if (status === "pending") {
     return (
       <div className="flex flex-col flex-1 justify-center items-center">
         <Loader2 className="h-7 w-7 text-zinc-500 animate-spin my-4" />
@@ -56,11 +62,31 @@ export const ChatMessage = ({apiUrl,chatId,member,name,paramKey,paramValue,socke
       </div>
     )
   }
-    return(
-    <div className="flex-1 flex flex-col py-4 overflow-y-auto">
-        <div className="flex-1"/>
-            <ChatWelcome type={type} name={name}/>
-            <div className="flex flex-col-reverse mt-auto">
+  return (
+    <div ref={chatRef} className="flex-1 flex flex-col py-4 overflow-y-auto">
+      {!hasNextPage && <div className="flex-1" />}
+      {!hasNextPage && (
+        <ChatWelcome
+          type={type}
+          name={name}
+        />
+      )}
+      {hasNextPage && (
+        <div className="flex justify-center">
+          {isFetchingNextPage ? (
+            <Loader2 className="h-6 w-6 text-zinc-500 animate-spin my-4" />
+          ) : (
+            <button
+              onClick={() => fetchNextPage()}
+              className="text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 text-xs my-4 dark:hover:text-zinc-300 transition"
+            >
+              Load previous messages
+            </button>
+          )}
+        </div>
+      )}
+
+      <div className="flex flex-col-reverse mt-auto">
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
             {group.items.map((message: MessageWithMemberWithProfile) => (
@@ -73,7 +99,7 @@ export const ChatMessage = ({apiUrl,chatId,member,name,paramKey,paramValue,socke
                 fileUrl={message.fileUrl}
                 deleted={message.deleted}
                 timestamp={format(new Date(message.createAt), DATE_FORMAT)}
-                isUpdated={message.updateAt!== message.createAt}
+                isUpdated={message.updateAt !== message.createAt}
                 socketUrl={socketUrl}
                 socketQuery={socketQuery}
               />
@@ -81,8 +107,10 @@ export const ChatMessage = ({apiUrl,chatId,member,name,paramKey,paramValue,socke
           </Fragment>
         ))}
       </div>
-            </div>
-            
+      <div ref={bottomRef} />
 
-    )    
+    </div>
+
+
+  )
 }
