@@ -30,4 +30,4 @@ Project link <a href="https://discord-clone-production-1725.up.railway.app/" >Cl
 - Websocket fallback: Polling with alerts
 - ORM using Prisma
 - MySQL database using Planetscale
-- Authentication with Clerk convent into li for githbut read me
+- Authentication with Clerk
